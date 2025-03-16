@@ -3,12 +3,12 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import { AppRouter } from './router/Router'
-import { ChakraProvider, defaultSystem } from '@chakra-ui/react'
+import { ConfigProvider } from 'antd'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ChakraProvider value={defaultSystem}>
+    <ConfigProvider>
       <RouterProvider router={AppRouter} />
-    </ChakraProvider>
+    </ConfigProvider>
   </StrictMode>
 )

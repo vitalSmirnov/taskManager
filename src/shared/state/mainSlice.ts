@@ -15,7 +15,7 @@ import { Filter, Sorting } from '../../entities/types/Todo/filter'
 
 type State = {
   todos: Todo[]
-  selectedTodo: Todo
+  selectedTodo: string | undefined
   filters: Filter
 }
 
@@ -27,13 +27,14 @@ type Actions = {
   toggleTodo: (body: ToggleTodoPayload) => void
   editTodo: (body: EditPayload) => void
   selectTodo: (body: SelectTodoPayload) => void
+  getSelectedTodo: () => Todo | undefined
 }
 
 export const useTodoStore = create<State & Actions>()(
   persist(
-    immer(set => ({
+    immer((set, get) => ({
       todos: [],
-      selectedTodo: {} as Todo,
+      selectedTodo: '',
       filters: {
         sorting: Sorting.ASC,
         completed: undefined,
@@ -45,6 +46,10 @@ export const useTodoStore = create<State & Actions>()(
           const todo = state.todos.find(item => item.id === taskId)
           if (todo) todo.completed = !todo.completed
         })
+      },
+      getSelectedTodo: () => {
+        if (get().selectedTodo === undefined) return undefined
+        return get().todos.find(item => item.id === get().selectedTodo)
       },
       createTodo: ({ body = '', title = '', completed = false, status = 'unstarted' }: CreatePayload) => {
         const data: Todo = {
@@ -76,31 +81,27 @@ export const useTodoStore = create<State & Actions>()(
         })
       },
       getTodos: () => {
-        let todos: Todo[] = []
-        set(state => {
-          const { search, completed, status, sorting } = state.filters
-          todos = state.todos
-          if (search) todos = todos.filter(item => item.title.includes(search))
-          if (completed) todos = todos.filter(item => item.completed === completed)
-          if (status) todos = todos.filter(item => item.status.includes(status))
-          todos = todos.sort((a, b) => {
-            if (sorting === Sorting.ASC) {
-              return a.createdAt.getTime() - b.createdAt.getTime()
-            } else {
-              return b.createdAt.getTime() - a.createdAt.getTime()
-            }
-          })
-        })
+        const search = get().filters.search || ''
+        const status = get().filters.status || ''
+        const completed = get().filters.completed || undefined
+        const sorting = get().filters.sorting || Sorting.ASC
         return {
-          data: todos,
+          data: get()
+            .todos.filter(item => item.title.includes(search))
+            .filter(item => item.status.includes(status))
+            .filter(item => item.completed === completed)
+            .sort((a, b) => {
+              if (sorting === Sorting.ASC) {
+                return a.createdAt.getTime() - b.createdAt.getTime()
+              } else {
+                return b.createdAt.getTime() - a.createdAt.getTime()
+              }
+            }),
         }
       },
       selectTodo: ({ taskId }: SelectTodoPayload) => {
         set(state => {
-          const deletedIndex = state.todos.findIndex(item => item.id === taskId)
-          if (deletedIndex !== -1) {
-            state.selectedTodo = state.todos[deletedIndex]
-          }
+          state.selectedTodo = taskId
         })
       },
       editTodo: ({ data, taskId }: EditPayload) => {
@@ -119,6 +120,9 @@ export const useTodoStore = create<State & Actions>()(
     {
       version: 0,
       name: 'todos',
+      partialize: state => ({
+        todos: state.todos,
+      }),
     }
   )
 )

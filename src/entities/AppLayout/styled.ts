@@ -5,22 +5,19 @@ export const LayoutStyled = styled.div`
   width: 100%;
   height: 100dvh;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 6fr 3fr;
-  padding: 1rem;
+  display: flex;
+  background-color: #cccccc;
 `
 
 export const NavSiderStyled = styled.aside`
   box-sizing: border-box;
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: #2f3c33;
+  gap: 16px;
+  padding: 16px;
+  background-color: #000000;
 `
 
 export const MainStyled = styled.main`
@@ -28,18 +25,7 @@ export const MainStyled = styled.main`
   width: 100%;
   height: 100%;
   padding: 1rem;
-  background-color: #f0f0f0;
+  background-color: #cccccc;
   overflow-y: auto;
-`
-
-export const MainSiderStyled = styled.main`
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: #2f3c33;
+  border-radius: 1rem 0 0 1rem;
 `

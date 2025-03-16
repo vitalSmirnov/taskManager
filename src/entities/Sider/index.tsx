@@ -1,4 +1,3 @@
-import { Wrap } from '@chakra-ui/react'
 import { RoutesEnum } from '../../shared/routes'
 import { LinkStyled } from './styled'
 
@@ -12,15 +11,10 @@ export const Sider = () => {
       <LinkStyled to={RoutesEnum.HOME}>
         <HomeIcon />
       </LinkStyled>
-      <Wrap
-        dir='column'
-        spaceY='20px'
-        marginY='auto'
-      >
-        <LinkStyled to={RoutesEnum.DASHBOARD}>
-          <DashboardIcon />
-        </LinkStyled>
-      </Wrap>
+
+      <LinkStyled to={RoutesEnum.DASHBOARD}>
+        <DashboardIcon />
+      </LinkStyled>
       <LinkStyled to={RoutesEnum.LOGIN}>
         <UserIcon />
       </LinkStyled>

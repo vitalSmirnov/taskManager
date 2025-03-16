@@ -1,8 +1,12 @@
+import { TaskHeader } from '../../../widgets/TaskHeader'
+import { TaskList } from '../../../widgets/TaskList'
+
 const HomePage = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
+    <>
+      <TaskHeader />
+      <TaskList />
+    </>
   )
 }
 

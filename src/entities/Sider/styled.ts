@@ -7,7 +7,8 @@ export const LinkStyled = styled(NavLink)`
   }
   color: white;
   text-decoration: none;
-  padding: 0.5rem;
+  padding: 8px;
+
   border-radius: 0.5rem;
   background-color: rgb(87, 86, 86);
   transition: background-color 0.3s ease-in-out 0.2s;
