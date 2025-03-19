@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { CreatePayload } from '../../shared/state/ActionsDataSource/sliceDataSource'
 import { useTodoStore } from '../../shared/state/mainSlice'
 import TextArea from 'antd/es/input/TextArea'
+import { AppButton } from '../../shared/ui/atoms/Button'
 
 type CreateTodoType = CreatePayload
 
@@ -31,9 +32,12 @@ export const CreateTodoModal = () => {
   }
   return (
     <>
-      <Button onClick={handlerOpen}>
+      <AppButton
+        variant={'outlined'}
+        onClick={handlerOpen}
+      >
         <Plus />
-      </Button>
+      </AppButton>
       <Modal
         title='Create Todo'
         onCancel={() => setopen(false)}

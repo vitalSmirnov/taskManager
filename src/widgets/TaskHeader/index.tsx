@@ -4,7 +4,10 @@ import { CreateTodoModal } from '../../features/CreateTodo'
 
 export const TaskHeader = () => {
   return (
-    <Flex>
+    <Flex
+      align='end'
+      gap={'16px'}
+    >
       <HeaderForm />
       <CreateTodoModal />
     </Flex>

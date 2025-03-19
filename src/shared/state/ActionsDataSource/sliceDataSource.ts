@@ -37,7 +37,7 @@ export type DeletePayload = {
 export type DeleteResposne = {}
 
 export type SelectTodoPayload = {
-  taskId: string | undefined
+  todo: Todo | undefined
 }
 export type SelectTodoResponse = {
   data: Todo

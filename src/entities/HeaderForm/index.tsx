@@ -2,23 +2,27 @@ import { Controller, useForm } from 'react-hook-form'
 import { Filter, Sorting } from '../types/Todo/filter'
 import { useEffect } from 'react'
 import { useTodoStore } from '../../shared/state/mainSlice'
-import { Button, Checkbox, Input } from 'antd'
-import { StyledForm } from './styled'
+import { App, Button, Checkbox, Input } from 'antd'
 
 import Asc from '../../shared/assets/sort-ascending.svg?react'
 import Desc from '../../shared/assets/sort-descending.svg?react'
+import { AppForm } from '../../shared/ui/atoms/Form'
+import { AppInput } from '../../shared/ui/atoms/Input'
+import { AppCheckbox } from '../../shared/ui/atoms/Checkbox'
 
 type HeaderFormType = Filter
 
 export const HeaderForm = () => {
   const setFilters = useTodoStore(state => state.setFilters)
-  const { watch, control } = useForm<HeaderFormType>({
+  const filters = useTodoStore(state => state.filters)
+  const { watch, register } = useForm<HeaderFormType>({
     defaultValues: {
-      search: '',
-      status: '',
-      sorting: Sorting.ASC,
-      completed: false,
+      search: filters.search,
+      status: filters.status,
+      sorting: filters.sorting,
+      completed: filters.completed,
     },
+    mode: 'onChange',
   })
 
   useEffect(() => {
@@ -30,59 +34,32 @@ export const HeaderForm = () => {
   }, [watch])
 
   return (
-    <StyledForm>
-      <Controller
-        name='search'
-        control={control}
-        render={({ field }) => (
-          <>
-            <Input
-              id='searchInput'
-              {...field}
-              placeholder='Search'
-            />
-          </>
-        )}
+    <AppForm
+      layout='horizontal'
+      gap='16px'
+    >
+      <AppInput
+        label='Search'
+        {...register('search')}
+        placeholder='search'
       />
-      <Controller
-        name='status'
-        control={control}
-        render={({ field }) => (
-          <>
-            <label htmlFor='status'>Status</label>
-            <Input
-              id='status'
-              {...field}
-              placeholder='Status'
-            />
-          </>
-        )}
+      <AppInput
+        label='Status'
+        {...register('status')}
+        placeholder='status'
       />
-      <Controller
-        name='sorting'
-        control={control}
-        render={({ field }) => (
-          <>
-            <label>Sorting</label>
-            <Button
-              {...field}
-              onClick={() => (field.value === Sorting.ASC ? Sorting.DESC : Sorting.ASC)}
-            >
-              {field.value == Sorting.ASC ? <Asc /> : <Desc />}
-            </Button>
-          </>
-        )}
-      />
-      <Controller
-        name='completed'
-        control={control}
-        render={({ field }) => (
-          <Checkbox
-            {...field}
-            checked={field.value}
-          />
-        )}
-      />
-    </StyledForm>
+      <AppCheckbox {...register('completed')}>
+        <AppCheckbox.Trigger
+          label='Completed'
+          val={true}
+        />
+      </AppCheckbox>
+      <AppCheckbox {...register('sorting')}>
+        <AppCheckbox.Trigger
+          label='Descending'
+          val={true}
+        />
+      </AppCheckbox>
+    </AppForm>
   )
 }

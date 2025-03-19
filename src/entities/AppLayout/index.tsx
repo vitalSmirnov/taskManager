@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { LayoutStyled, MainStyled, NavSiderStyled } from './styled'
+import { LayoutStyled, MainStyled, NavSiderStyled, SiderStyled } from './styled'
 import { Suspense } from 'react'
 import { Sider } from '../Sider'
 import { TaskSider } from '../../widgets/TaskSider'
@@ -16,9 +16,11 @@ export const AppTemplate = () => {
             <Outlet />
           </Suspense>
         </MainStyled>
-        <Suspense>
-          <TaskSider />
-        </Suspense>
+        <SiderStyled>
+          <Suspense>
+            <TaskSider />
+          </Suspense>
+        </SiderStyled>
       </LayoutStyled>
     </Suspense>
   )

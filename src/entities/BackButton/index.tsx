@@ -1,16 +1,19 @@
-import { Button } from 'antd'
 import { useTodoStore } from '../../shared/state/mainSlice'
 
 import Plus from '../../shared/assets/plus.svg?react'
+import { AppButton } from '../../shared/ui/atoms/Button'
 
 export const BackButton = () => {
   const setSelectedTodo = useTodoStore(state => state.selectTodo)
   const handleClick = () => {
-    setSelectedTodo({ taskId: '' })
+    setSelectedTodo({ todo: undefined })
   }
   return (
-    <Button onClick={handleClick}>
-      <Plus style={{ rotate: '45deg' }} />
-    </Button>
+    <AppButton
+      variant={'outlined'}
+      onClick={handleClick}
+    >
+      <Plus style={{ rotate: '45deg', color: 'white' }} />
+    </AppButton>
   )
 }
